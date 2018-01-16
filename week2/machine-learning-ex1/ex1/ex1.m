@@ -32,8 +32,9 @@ fprintf('Running warmUpExercise ... \n');
 fprintf('5x5 Identity Matrix: \n');
 warmUpExercise()
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
+% commenting to speed the process up
+% fprintf('Program paused. Press enter to continue.\n');
+% pause;
 
 
 %% ======================= Part 2: Plotting =======================
