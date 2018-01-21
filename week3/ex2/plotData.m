@@ -12,13 +12,14 @@ figure; hold on;
 %               examples and 'ko' for the negative examples.
 %
 
+pos = find(y==1);
+neg = find(y==0);
 
+posX = X(pos,:);
+negX = X(neg,:);
 
-
-
-
-
-
+plot(posX(:,1), posX(:,2), 'k+')
+plot(negX(:,1), negX(:,2), 'ko')
 
 % =========================================================================
 
