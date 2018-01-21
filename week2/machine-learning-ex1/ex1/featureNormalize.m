@@ -26,9 +26,11 @@ sigma = zeros(1, size(X, 2));
 % Hint: You might find the 'mean' and 'std' functions useful.
 %       
 
-
-
-
+for iter = 1:size(X,2)
+  mu(iter) = mean(X(:,iter));
+  sigma(iter) = std(X(:,iter));
+  X(:,iter) = (X(:,iter) - mu(iter) ) / sigma(iter);
+endfor
 
 
 
