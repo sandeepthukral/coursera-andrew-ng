@@ -1,3 +1,5 @@
 */*.DS_Store
 .DS_Store
 week2/machine-learning-ex1/ex1/token.mat
+*/*token.mat
+week3/ex2/token.mat
