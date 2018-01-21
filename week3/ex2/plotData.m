@@ -18,8 +18,8 @@ neg = find(y==0);
 posX = X(pos,:);
 negX = X(neg,:);
 
-plot(posX(:,1), posX(:,2), 'k+')
-plot(negX(:,1), negX(:,2), 'ko')
+plot(posX(:,1), posX(:,2), 'k+', 'markersize', 3)
+plot(negX(:,1), negX(:,2), 'ro', 'markersize', 3)
 
 % =========================================================================
 
