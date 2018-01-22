@@ -67,7 +67,7 @@ lambda = 1;
 % regression
 [cost, grad] = costFunctionReg(initial_theta, X, y, lambda);
 
-fprintf('Cost at initial theta (zeros): %f\n', cost);
+fprintf('Cost at initial theta (zeros): %f\n', cost(1));
 fprintf('Expected cost (approx): 0.693\n');
 fprintf('Gradient at initial theta (zeros) - first five values only:\n');
 fprintf(' %f \n', grad(1:5));
@@ -82,7 +82,7 @@ pause;
 test_theta = ones(size(X,2),1);
 [cost, grad] = costFunctionReg(test_theta, X, y, 10);
 
-fprintf('\nCost at test theta (with lambda = 10): %f\n', cost);
+fprintf('\nCost at test theta (with lambda = 10): %f\n', cost(1));
 fprintf('Expected cost (approx): 3.16\n');
 fprintf('Gradient at test theta - first five values only:\n');
 fprintf(' %f \n', grad(1:5));
