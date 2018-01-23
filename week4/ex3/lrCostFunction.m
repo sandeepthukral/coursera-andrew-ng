@@ -36,14 +36,21 @@ grad = zeros(size(theta));
 %           grad = grad + YOUR_CODE_HERE (using the temp variable)
 %
 
+hx = sigmoid(X * theta);
 
+temp = theta;
+temp(1) = 0;
 
+JregParameter = (lambda / (2*m)) * sum(temp .^2);
+% fprintf("\n jTheta Reg Parameter %f\n", JregParameter);
 
+J = ((-y' * log(hx) - (1 - y')*log(1 - hx)) / m ) + JregParameter;
 
+% fprintf('\nhx -y : %f\n', hx - y);
 
-
-
-
+gradRegParameter = (lambda * temp / m);
+% fprintf('\n gradRegParameter %f\n', gradRegParameter);
+grad = (X' * (hx - y) / m) + gradRegParameter ;
 
 % =============================================================
 
