@@ -18,9 +18,11 @@ function [J grad] = nnCostFunction(nn_params, ...
 % for our 2 layer neural network
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
                  hidden_layer_size, (input_layer_size + 1));
+% fprintf('\nSize Theta1 %f\n', size(Theta1));
 
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
+% fprintf('\nSize Theta2 %f\n\n', size(Theta2));
 
 % Setup some useful variables
 m = size(X, 1);
@@ -39,6 +41,37 @@ Theta2_grad = zeros(size(Theta2));
 %         cost function computation is correct by verifying the cost
 %         computed in ex4.m
 %
+
+% Expand the 'y' output values into a matrix of single values (see ex4.pdf Page 5)
+y_matrix = eye(num_labels)(y,:) ;
+
+% Perform the forward propagation. This is traignt forward, but is there a better way?
+A1 = [ones(m,1) X];
+A2 = sigmoid(A1 * Theta1');
+A2 = [ones(size(A2,1),1) A2];
+A3 = sigmoid(A2 * Theta2');
+
+% Cost Function, non-regularized
+intMatrix = 0 - ( y_matrix .* (log(A3)) + ( (1-y_matrix) .* log(1-A3)));
+
+% Sum first rowwise, then sum columnwise
+J = sum(sum(intMatrix,2),1) / m;
+
+% Now the regularization
+% Use temp copies of Theta1 and Theta2, set first column to 0 to negate their sums
+Theta1_temp = Theta1;
+Theta1_temp(:,1) = zeros(hidden_layer_size,1);
+
+Theta2_temp = Theta2;
+Theta2_temp(:,1) = zeros(num_labels,1);
+
+% Sum first rowwise, then sum columnwise
+regTheta1 = sum(sum((Theta1_temp .^ 2),2),1);
+regTheta2 = sum(sum((Theta2_temp .^ 2),2),1);
+
+% J = unregJ + lambda/2m (sum of regularizations calculated above)
+J = J + (lambda / (2*m)) * (regTheta1 + regTheta2);
+
 % Part 2: Implement the backpropagation algorithm to compute the gradients
 %         Theta1_grad and Theta2_grad. You should return the partial derivatives of
 %         the cost function with respect to Theta1 and Theta2 in Theta1_grad and
