@@ -29,11 +29,11 @@ num_labels = 10;          % 10 labels, from 1 to 10
 %  You will be working with a dataset that contains handwritten digits.
 %
 
-% % Load Training Data
-% fprintf('Loading and Visualizing Data ...\n')
+% Load Training Data
+fprintf('Loading and Visualizing Data ...\n')
 
-% load('ex4data1.mat');
-% m = size(X, 1);
+load('ex4data1.mat');
+m = size(X, 1);
 
 % % Randomly select 100 data points to display
 % sel = randperm(size(X, 1));
