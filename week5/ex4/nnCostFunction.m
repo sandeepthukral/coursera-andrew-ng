@@ -47,9 +47,11 @@ y_matrix = eye(num_labels)(y,:) ;
 
 % Perform the forward propagation. This is traignt forward, but is there a better way?
 A1 = [ones(m,1) X];
-A2 = sigmoid(A1 * Theta1');
+Z2 = A1 * Theta1';
+A2 = sigmoid(Z2);
 A2 = [ones(size(A2,1),1) A2];
-A3 = sigmoid(A2 * Theta2');
+Z3 = A2 * Theta2';
+A3 = sigmoid(Z3);
 
 % Cost Function, non-regularized
 intMatrix = 0 - ( y_matrix .* (log(A3)) + ( (1-y_matrix) .* log(1-A3)));
@@ -87,6 +89,21 @@ J = J + (lambda / (2*m)) * (regTheta1 + regTheta2);
 %               over the training examples if you are implementing it for the 
 %               first time.
 %
+
+% calculate sigma3 and sigma2. These use the biased A matrices
+sigma3 = A3 - y_matrix;
+% This next calculation was the one that was throwing my work off.
+% sigma2 = (sigma3 * Theta2(:,2:end)) .* sigmoidGradient(A1(:,2:end) * (Theta1(:,2:end))');
+sigma2 = (sigma3 * Theta2 .* sigmoidGradient([ones(size(A2, 1), 1) Z2]))(:, 2:end);
+
+% calculate Delta1 and Delta2. These use the biased A matrices
+Delta1 = sigma2' * A1;
+Delta2 = sigma3' * A2;
+
+% Grads are just deltas scaled by m
+Theta1_grad = Delta1 / m;
+Theta2_grad = Delta2 / m;
+
 % Part 3: Implement regularization with the cost function and gradients.
 %
 %         Hint: You can implement this around the code for
@@ -95,23 +112,14 @@ J = J + (lambda / (2*m)) * (regTheta1 + regTheta2);
 %               and Theta2_grad from Part 2.
 %
 
+Theta1(:,1) = 0;
+Theta2(:,1) = 0;
 
+Theta1 = Theta1 * (lambda / m);
+Theta2 = Theta2 * (lambda / m);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Theta1_grad = Theta1_grad + Theta1;
+Theta2_grad = Theta2_grad + Theta2;
 
 % -------------------------------------------------------------
 
