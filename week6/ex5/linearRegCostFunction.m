@@ -18,9 +18,12 @@ grad = zeros(size(theta));
 %
 %               You should set J to the cost and grad to the gradient.
 %
+
+% Unregularized calculation
 h = X * theta;
 J = ( sum((h - y).^2) ) / (2 * m);
 
+% reg is the regularization factor which needs the first value of theta to be 0
 temp = theta;
 temp(1) = 0;
 reg = (lambda / (2 * m)) * sum(temp.^2);
