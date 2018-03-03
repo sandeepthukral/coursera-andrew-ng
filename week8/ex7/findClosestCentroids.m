@@ -20,7 +20,12 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
+for i = 1 : size(idx,1)
+  xi = X(i,:);
+  xidiff = (xi .- centroids).^2;
+  [theMin, theIndex] = min(sum(xidiff, 2));
+  idx(i) = theIndex;
+endfor
 
 
 
